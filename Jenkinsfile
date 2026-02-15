@@ -2,7 +2,7 @@ pipeline {
     agent {
         // Use a Docker image that includes Maven and a specific Java version (e.g., Java 17)
         docker {
-            image 'maven:3.8.7' 
+            image 'maven:3.9.9-eclipse-temurin-21' 
             args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket to allow building Docker images from within Jenkins agent
         }
     }
