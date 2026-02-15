@@ -1,7 +1,8 @@
 node {
         // Use a Docker image that includes Maven and a specific Java version (e.g., Java 17)
-        docker.image ('maven:3.9.9-eclipse-temurin-21') 
-        docker.args ('-v /var/run/docker.sock:/var/run/docker.sock') // Mount Docker socket to allow building Docker images from within Jenkins agent
+        docker.image('maven:3.9.9-eclipse-temurin-21').inside {
+        sh 'mvn clean install'
+    }
         stage('Build') {
             steps {
                 // Compile the Java code using Maven
