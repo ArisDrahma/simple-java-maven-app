@@ -1,27 +1,21 @@
 node {
-        // Gunakan image Maven resmi
+    // Gunakan image Maven resmi
     def mvnImage = docker.image('maven:3.9.9-eclipse-temurin-21')
+
     // Jalankan container Maven
     mvnImage.inside {
         stage('Build') {
-            steps {
-                // Compile the Java code using Maven
-                sh 'mvn clean install'
-            }
+            // Compile the Java code using Maven
+            sh 'mvn clean install'
         }
+
         stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
+            sh 'mvn test'
         }
+
         stage('Run Hello World') {
-            steps {
-                // Run the compiled Java class
-                //  sh 'java Hello'
-                 sh 'java -cp target/classes com.mycompany.app.App'
-                // For a Maven project, the run command might be different, but for a simple "Hello.java" in the root directory:
-                // sh 'java -cp target/classes Hello' // (if compiled into target/classes by mvn compile)
-            }
+            // Jalankan class Java hasil compile
+            sh 'java -cp target/classes com.mycompany.app.App'
         }
     }
 }
