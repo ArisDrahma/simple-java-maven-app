@@ -1,8 +1,6 @@
 node {
         docker.image('maven:3.9.9-eclipse-temurin-21')
-          .inside('-v /var/run/docker.sock:/var/run/docker.sock') {
-            sh 'mvn -v'
-            }
+          .inside('-v /var/run/docker.sock:/var/run/docker.sock')
         stage('Build') {
             steps {
                 // Compile the Java code using Maven
