@@ -16,8 +16,8 @@ pipeline {
         stage('Run Hello World') {
             steps {
                 // Run the compiled Java class
-                // sh 'java Hello'
-                    sh 'java App'
+                    sh 'java Hello'
+                //  sh 'java App'
                 // For a Maven project, the run command might be different, but for a simple "Hello.java" in the root directory:
                 // sh 'java -cp target/classes Hello' (if compiled into target/classes by mvn compile)
             }
