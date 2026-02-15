@@ -1,6 +1,8 @@
 node {
-        docker.image('maven:3.9.9-eclipse-temurin-21')
-          .inside('-v /var/run/docker.sock:/var/run/docker.sock')
+        // Gunakan image Maven resmi
+    def mvnImage = docker.image('maven:3.9.9-eclipse-temurin-21')
+    // Jalankan container Maven
+    mvnImage.inside {
         stage('Build') {
             steps {
                 // Compile the Java code using Maven
@@ -21,4 +23,5 @@ node {
                 // sh 'java -cp target/classes Hello' // (if compiled into target/classes by mvn compile)
             }
         }
+    }
 }
