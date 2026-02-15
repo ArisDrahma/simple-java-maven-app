@@ -6,7 +6,7 @@ node {
         stage('Build') {
             steps {
                 // Compile the Java code using Maven
-                sh 'mvn clean compile'
+                sh 'mvn clean install'
             }
         }
         stage('Test') {
