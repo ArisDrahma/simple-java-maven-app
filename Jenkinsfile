@@ -29,5 +29,24 @@ node {
                 throw exc
             }
         }
+        stage('Deploy') {
+            try {
+            // Build JAR
+            sh 'mvn clean package -DskipTests'
+
+            // Jalankan aplikasi Java di background
+            sh 'nohup java -jar target/*.jar > app.log 2>&1 & echo $! > app.pid'
+
+            // Tunggu konfirmasi manual
+            input message: 'Aplikasi Java sudah selesai digunakan? Klik "Proceed" untuk menghentikan.'
+
+            // Stop aplikasi berdasarkan PID
+            sh 'kill $(cat app.pid)'
+
+            } catch (exc) {
+                echo 'Deploy failed!'
+                throw exc
+            }
+        }
     }
 }
