@@ -34,7 +34,7 @@ node {
             // Build JAR
                 sh 'mvn clean package -DskipTests'
                 sh '''
-                nohup java -jar target/*.jar > app.log 2>&1 &
+                nohup java -jar target/*.jar --server.port=4000 > app.log 2>&1 &
                 echo $! > app.pid
                 '''
         
