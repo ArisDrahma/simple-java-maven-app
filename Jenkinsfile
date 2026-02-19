@@ -35,14 +35,13 @@ node {
                 sh 'mvn clean package -DskipTests'
                 sh '''
                 JAR_FILE=$(ls target/*.jar | grep -v original | head -n 1)
-
-                # Stop aplikasi lama kalau ada
-                if [ -f app.pid ]; then
-                    kill -9 $(cat app.pid) || true
-                    rm app.pid
-                fi
                 nohup java -jar $JAR_FILE --server.port=4000 > app.log 2>&1 &
                 echo $! > app.pid
+                '''
+                input message: 'Aplikasi Java sudah berjalan. Klik "Proceed" untuk menghentikan.'
+                sh '''
+                kill $(cat app.pid)
+                rm app.pid
                 '''
             } catch (exc) {
                 echo 'Deploy failed!'
