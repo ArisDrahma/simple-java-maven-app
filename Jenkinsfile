@@ -34,11 +34,10 @@ node {
             // Build JAR
             sh 'mvn clean package -DskipTests'
 
+            echo 'Deploying Spring Boot App...'
             sh '''
-            docker stop app || true
-            docker rm app || true
-            docker build -t hello-jenkins .
-            docker run -d -p 8081:8080 --name app hello-jenkins
+            pkill -f app.jar || true
+            nohup java -jar target/app.jar --server.port=3000 > app.log 2>&1 &
             '''
             // Tunggu konfirmasi manual
             input message: 'Aplikasi Java sudah selesai digunakan? Klik "Proceed" untuk menghentikan.'
