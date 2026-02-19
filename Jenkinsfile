@@ -1,6 +1,6 @@
 node {
 
-    docker.image('maven:3.9.9-eclipse-temurin-21')
+    docker.image('maven:3.8-eclipse-temurin-17')
         .inside('-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2') {
 
         stage('Build') {
@@ -27,6 +27,14 @@ node {
             } catch (exc) {
                 echo 'Run failed!'
                 throw exc
+            }
+        }
+        stage('Manual Approval') {
+            steps {
+                script {
+                    input message: 'Lanjutkan ke tahap Deploy?',
+                          ok: 'Proceed'
+                }
             }
         }
         stage('Deploy') {
