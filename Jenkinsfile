@@ -32,18 +32,24 @@ node {
         stage('Deploy') {
             try {
             // Build JAR
-            sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
 
-            echo 'Deploying Spring Boot App...'
-            sh '''
-            pkill -f app.jar || true
-            nohup java -jar target/app.jar --server.port=3000 > app.log 2>&1 &
-            '''
-            // Tunggu konfirmasi manual
-            input message: 'Aplikasi Java sudah selesai digunakan? Klik "Proceed" untuk menghentikan.'
+                echo 'Stopping old app...'
+                sh 'pkill -f app.jar || true'
 
-            // Stop aplikasi berdasarkan PID
-            sh 'kill $(cat app.pid)'
+                echo 'Starting Spring Boot App...'
+                sh '''
+                nohup java -jar target/*.jar --server.port=3000 > app.log 2>&1 &
+                echo $! > app.pid
+                '''
+
+                sleep 5
+
+                sh 'ps aux | grep java'
+
+                input message: 'Aplikasi sudah selesai digunakan? Klik Proceed untuk menghentikan.'
+
+                sh 'kill $(cat app.pid)'
 
             } catch (exc) {
                 echo 'Deploy failed!'
