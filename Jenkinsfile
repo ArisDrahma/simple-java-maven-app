@@ -34,23 +34,27 @@ node {
                 // Build
                 sh 'mvn clean package -DskipTests'
 
-                // Stop jika masih ada yang jalan
+                // Matikan jika port sudah dipakai
                 sh 'fuser -k 4000/tcp || true'
 
-                // Run JAR
+                // Jalankan aplikasi
                 sh '''
-                JAR_FILE=$(find target -name "*.jar" ! -name "original-*.jar" | head -n 1)
-                nohup java -jar $JAR_FILE --server.port=4000 > app.log 2>&1 &
+                nohup java -jar target/my-app-1.0-SNAPSHOT.jar --server.port=4000 > app.log 2>&1 &
                 echo $! > app.pid
                 '''
 
-                input message: 'Aplikasi Java sudah berjalan. Klik "Proceed" untuk menghentikan.'
+                echo "Aplikasi berjalan di port 4000 selama 1 menit..."
 
-                // Stop App
+                // Jeda 1 menit
+                sleep(time: 1, unit: 'MINUTES')
+
+                echo "Menghentikan aplikasi..."
+
+                // Stop aplikasi
                 sh '''
                 if [ -f app.pid ]; then
-                kill $(cat app.pid) || true
-                rm app.pid
+                  kill $(cat app.pid) || true
+                  rm app.pid
                 fi
                 '''
 
@@ -58,6 +62,6 @@ node {
                 echo 'Deploy failed!'
                 throw exc
             }
-        }   
+        } 
     }
 }
