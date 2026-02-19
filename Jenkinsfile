@@ -35,10 +35,10 @@ node {
             sh 'mvn clean package -DskipTests'
 
             sh '''
-            docker stop hello-app || true
-            docker rm hello-app || true
+            docker stop app || true
+            docker rm app || true
             docker build -t hello-jenkins .
-            docker run -d -p 8081:8080 --name hello-app hello-jenkins
+            docker run -d -p 8081:8080 --name app hello-jenkins
             '''
             // Tunggu konfirmasi manual
             input message: 'Aplikasi Java sudah selesai digunakan? Klik "Proceed" untuk menghentikan.'
