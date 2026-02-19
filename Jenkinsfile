@@ -40,7 +40,7 @@ node {
                 echo 'Starting Spring Boot App...'
                 sh '''
                 nohup java -jar target/*.jar --server.port=3000 > app.log 2>&1 &
-                echo $! > app.pid
+                echo $! > app.jar
                 '''
 
                 sleep 5
@@ -49,7 +49,7 @@ node {
 
                 input message: 'Aplikasi sudah selesai digunakan? Klik Proceed untuk menghentikan.'
 
-                sh 'kill $(cat app.pid)'
+                sh 'kill $(cat app.jar)'
 
             } catch (exc) {
                 echo 'Deploy failed!'
