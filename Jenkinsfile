@@ -5,7 +5,7 @@ node {
 
         stage('Build') {
             try {
-                sh 'mvn clean compile'
+                sh 'mvn clean package -Dmaven.repo.local=/tmp/.m2/repository'
             } catch (exc) {
                 echo 'Build failed!'
                 throw exc
