@@ -34,9 +34,12 @@ node {
             // Build JAR
             sh 'mvn clean package -DskipTests'
 
-            // Jalankan aplikasi Java di background
-            sh 'nohup java -jar target/*.jar > app.log 2>&1 & echo $! > app.pid'
-
+            sh '''
+            docker stop hello-app || true
+            docker rm hello-app || true
+            docker build -t hello-jenkins .
+            docker run -d -p 8081:8080 --name hello-app hello-jenkins
+            '''
             // Tunggu konfirmasi manual
             input message: 'Aplikasi Java sudah selesai digunakan? Klik "Proceed" untuk menghentikan.'
 
