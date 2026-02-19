@@ -30,11 +30,12 @@ node {
             }
         }
         stage('Manual Approval') {
-            steps {
-                script {
-                    input message: 'Lanjutkan ke tahap Deploy?',
-                          ok: 'Proceed'
-                }
+            try {
+                input message: 'Lanjutkan ke tahap Deploy?',
+                    ok: 'Proceed'
+            } catch (exc) {
+                echo 'Manual Approval!'
+                throw exc
             }
         }
         stage('Deploy') {
