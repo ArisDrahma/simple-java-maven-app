@@ -11,5 +11,5 @@ COPY target/*.jar app.jar
 EXPOSE 4000 8080
 
 # Jalankan aplikasi
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar","--server.port=4000"]
 
