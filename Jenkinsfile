@@ -50,6 +50,10 @@ node {
         try {
             
             sh '''
+
+            echo "Cek repository yang digunakan Jenkins:"
+            git remote -v
+
             echo "Lokasi sekarang:"
             pwd
             ls -lah
