@@ -29,7 +29,7 @@ node {
         try {
             docker.image('maven:3.9.9-eclipse-temurin-21')
                 .inside() {
-                    sh 'java -jar target/*.jar'
+                    sh 'nohup java -jar target/*.jar &'
                 }
         } catch (exc) {
             echo 'Run Hello World failed!'
