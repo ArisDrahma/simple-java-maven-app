@@ -48,12 +48,12 @@ node {
 
     stage('Deploy') {
         try {
+            
             sh '''
             echo "Lokasi sekarang:"
             pwd
             ls -lah
 
-            sh '''
             echo "Menghapus container lama jika ada..."
             docker rm -f my-app-container || true
 
