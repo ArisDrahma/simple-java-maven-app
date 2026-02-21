@@ -42,38 +42,39 @@ node {
         //    }
         //}
 
-    stage('Deploy') {
-        try {
-            
-        //    sh '''
-        //    echo "Menghapus container lama jika ada..."
-        //   docker rm -f my-app-container || true
+        stage('Deploy') {
+            try {
+                
+            //    sh '''
+            //    echo "Menghapus container lama jika ada..."
+            //   docker rm -f my-app-container || true
 
-        //    echo "Build Docker image..."
-        //    docker build -t my-app .
+            //    echo "Build Docker image..."
+            //    docker build -t my-app .
 
-        //    echo "Menjalankan container di port 4000..."
-        //    docker run -d \
-        //    --name my-app-container \
-        //    -p 4000:4000 \
-        //    my-app
-        //    '''
+            //    echo "Menjalankan container di port 4000..."
+            //    docker run -d \
+            //    --name my-app-container \
+            //    -p 4000:4000 \
+            //    my-app
+            //    '''
 
-        //    echo "Aplikasi berjalan selama 1 menit..."
-        //    sleep(time: 1, unit: 'MINUTES')
+            //    echo "Aplikasi berjalan selama 1 menit..."
+            //    sleep(time: 1, unit: 'MINUTES')
 
-        //    sh '''
-        //    echo "Menghentikan container setelah 1 menit..."
-        //    docker rm -f my-app-container || true
-        //    '''
+            //    sh '''
+            //    echo "Menghentikan container setelah 1 menit..."
+            //    docker rm -f my-app-container || true
+            //    '''
 
-            sh './jenkins/scripts/deliver.sh' 
-            input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)' 
-            sh './jenkins/scripts/kill.sh' 
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)' 
+                sh './jenkins/scripts/kill.sh' 
 
-        } catch (exc) {
-            echo 'Deploy failed!'
-            throw exc
+            } catch (exc) {
+                echo 'Deploy failed!'
+                throw exc
+            }
         }
     }   
 }
