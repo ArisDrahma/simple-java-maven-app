@@ -67,7 +67,7 @@ node {
             //    docker rm -f my-app-container || true
             //    '''
             
-            dir('simple-java-webapp') {
+            dir('simple-java-maven-app') {
             sh '''
                 JAR_FILE=$(ls target/*.jar | grep -v original | head -n 1)
                 # Jalankan Spring Boot tanpa cek lsof
