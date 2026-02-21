@@ -67,9 +67,10 @@ node {
             //    docker rm -f my-app-container || true
             //    '''
 
-                sh './jenkins/scripts/deliver.sh' 
-                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)' 
-                sh './jenkins/scripts/kill.sh' 
+                sh 'mvn clean package -DskipTests'
+                sh 'nohup java -jar target/my-app-1.0-SNAPSHOT.jar --server.port=4000 > app.log 2>&1 &'
+                input message: 'Klik Proceed untuk menghentikan aplikasi'
+                sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
 
             } catch (exc) {
                 echo 'Deploy failed!'
