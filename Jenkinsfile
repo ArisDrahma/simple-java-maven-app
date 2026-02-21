@@ -71,7 +71,6 @@ node {
             input message: 'Klik Proceed untuk menghentikan aplikasi'
             sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
 
-            } 
             }catch (exc) {
                 echo 'Deploy failed!'
                 throw exc
