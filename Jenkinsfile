@@ -66,8 +66,9 @@ node {
             //    echo "Menghentikan container setelah 1 menit..."
             //    docker rm -f my-app-container || true
             //    '''
-            # Ambil JAR
+            
             sh '''
+                # Ambil JAR
                 JAR_FILE=$(ls target/*.jar | grep -v original | head -n 1)
 
                 # Hentikan proses lama di port 4000 jika ada
