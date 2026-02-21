@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World Web</title>
+    <style>
+        body {
+            background-color: #282c34;
+            color: #61dafb;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 4rem;
+            text-shadow: 2px 2px 5px #000000;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="${message}">Hello World!</h1>
+</body>
+</html>
