@@ -67,7 +67,6 @@ node {
             //    docker rm -f my-app-container || true
             //    '''
 
-                sh 'mvn clean package -DskipTests'
                 sh 'nohup java -jar target/my-app-1.0-SNAPSHOT.jar --server.port=4000 > app.log 2>&1 &'
                 input message: 'Klik Proceed untuk menghentikan aplikasi'
                 sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
