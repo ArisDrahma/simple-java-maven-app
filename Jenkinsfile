@@ -6,9 +6,7 @@ node {
     .inside('-v $HOME/.m2:/root/.m2'){
         stage('Build') {
             try {
-                dir("${APP_DIR}") {
                 sh 'mvn clean package -DskipTests'
-                }
             } catch (exc) {
                 echo 'Build failed!'
                 throw exc
@@ -68,23 +66,8 @@ node {
             //    echo "Menghentikan container setelah 1 menit..."
             //    docker rm -f my-app-container || true
             //    '''
-            echo "Menjalankan aplikasi di port ${APP_PORT}..."
-            dir("${APP_DIR}/target") {
-            ssh '''
-                    # Ambil JAR yang sudah dibuat
-                    JAR_FILE=$(ls *.jar | grep -v original | head -n 1)
-
-                    # Hentikan proses lama yang pakai port
-                    OLD_PID=$(lsof -ti :${APP_PORT})
-                    if [ ! -z "$OLD_PID" ]; then
-                        echo "Menghentikan proses lama di port ${APP_PORT}: $OLD_PID"
-                        kill -9 $OLD_PID
-                    fi
-
-                    # Jalankan aplikasi di background
-                    nohup java -jar $JAR_FILE --server.port=${APP_PORT} --server.address=0.0.0.0 > app.log 2>&1 &
-                    echo "Aplikasi berjalan. Log: target/app.log"
-                '''
+            sh 'nohup java -jar target/my-app-1.0-SNAPSHOT.jar --server.port=4000 > app.log 2>&1 &'
+        
             input message: 'Klik Proceed untuk menghentikan aplikasi'
             sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
 
