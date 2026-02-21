@@ -66,11 +66,22 @@ node {
             //    echo "Menghentikan container setelah 1 menit..."
             //    docker rm -f my-app-container || true
             //    '''
-            sh 'nohup java -jar target/my-app-1.0-SNAPSHOT.jar --server.port=4000 > app.log 2>&1 &'
-        
-            input message: 'Klik Proceed untuk menghentikan aplikasi'
-            sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
+            # Ambil JAR
+            sh '''
+                JAR_FILE=$(ls target/*.jar | grep -v original | head -n 1)
 
+                # Hentikan proses lama di port 4000 jika ada
+                OLD_PID=$(lsof -ti :4000)
+                if [ ! -z "$OLD_PID" ]; then
+                    echo "Menghentikan proses lama: $OLD_PID"
+                    kill -9 $OLD_PID
+                fi
+
+                # Jalankan aplikasi di background
+                nohup java -jar $JAR_FILE --server.port=4000 --server.address=0.0.0.0 > target/app.log 2>&1 &
+                
+                echo "Aplikasi Spring Boot berjalan di port 4000"
+            '''
             }catch (exc) {
                 echo 'Deploy failed!'
                 throw exc
