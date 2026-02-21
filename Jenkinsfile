@@ -73,6 +73,7 @@ node {
                 --server.port=4000 \
                 --server.address=0.0.0.0 \
                 > app.log 2>&1 &
+                curl -I http://localhost:${APP_PORT} || echo "Tidak bisa diakses saat ini"
                 '''
                 input message: 'Klik Proceed untuk menghentikan aplikasi'
                 sh "pkill -f my-app-1.0-SNAPSHOT.jar || true" 
