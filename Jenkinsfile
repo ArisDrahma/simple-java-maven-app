@@ -71,7 +71,7 @@ node {
             sh '''
                 JAR_FILE=$(ls target/*.jar | grep -v original | head -n 1)
                 # Jalankan Spring Boot tanpa cek lsof
-                nohup java -jar $JAR_FILE --server.port=4000 --server.address=0.0.0.0 > target/app.log 2>&1 &
+                nohup java -jar $JAR_FILE --server.port=3000 --server.address=0.0.0.0 > target/app.log 2>&1 &
                 echo "Aplikasi berjalan di port 4000. Cek log: target/app.log"
             '''
             }
